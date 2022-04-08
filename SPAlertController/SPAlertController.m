@@ -274,6 +274,7 @@
 @property (nonatomic, weak) UIStackView *textFieldView;
 @property (nonatomic, strong) NSMutableArray *textFields;
 @property (nonatomic, assign) UIEdgeInsets contentEdgeInsets;
+@property (nonatomic, assign) CGFloat LabelSpaceMargin;
 @property (nonatomic, copy) void(^headerViewSfeAreaDidChangBlock)(void);
 @end
 
@@ -285,7 +286,8 @@
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        self.contentEdgeInsets = UIEdgeInsetsMake(20, 15, 20, 15);
+        self.contentEdgeInsets = UIEdgeInsetsMake(30, 15, 30, 15);
+        self.LabelSpaceMargin = 20;
     }
     return self;
 }
@@ -319,9 +321,9 @@
 
 - (void)safeAreaInsetsDidChange {
     [super safeAreaInsetsDidChange];
-    CGFloat safeTop    = self.safeAreaInsets.top < 20 ? 20 : self.safeAreaInsets.top+10;
+    CGFloat safeTop    = self.safeAreaInsets.top < 30 ? 30 : self.safeAreaInsets.top+10;
     CGFloat safeLeft   = self.safeAreaInsets.left < 15 ? 15 : self.safeAreaInsets.left;
-    CGFloat safeBottom = self.safeAreaInsets.bottom < 20 ? 20 : self.safeAreaInsets.bottom+6;
+    CGFloat safeBottom = self.safeAreaInsets.bottom < 30 ? 30 : self.safeAreaInsets.bottom+6;
     CGFloat safeRight  = self.safeAreaInsets.right < 15 ? 15 : self.safeAreaInsets.right;
     _contentEdgeInsets = UIEdgeInsetsMake(safeTop, safeLeft, safeBottom, safeRight);
     // 这个block，主要是更新Label的最大预估宽度
@@ -364,9 +366,9 @@
         if (_titleLabel.text.length || _titleLabel.attributedText.length) {
             [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
         } else if (_messageLabel.text.length || _messageLabel.attributedText.length) {
-            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_messageLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
+            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_messageLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-_LabelSpaceMargin]];
         } else if (_textFields.count) {
-            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
+            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-_LabelSpaceMargin]];
         } else {
             [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeBottom multiplier:1.f constant:-bottomMargin]];
         }
@@ -401,7 +403,7 @@
         }
         // 子控件之间的垂直间距
         if (idx > 0) {
-            [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labels[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:7.5]];
+            [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labels[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:_LabelSpaceMargin]];
         }
     }];
     [NSLayoutConstraint activateConstraints:titleLabelConstraints];
@@ -2268,7 +2270,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     SPAlertController *alertController = (SPAlertController *)self.presentedViewController;
 
     [self.overlayView setAppearanceStyle:alertController.backgroundViewAppearanceStyle alpha:alertController.backgroundViewAlpha];
-    
+
     // 遮罩的alpha值从0～1变化，UIViewControllerTransitionCoordinator协是一个过渡协调器，当执行模态过渡或push过渡时，可以对视图中的其他部分做动画
     id <UIViewControllerTransitionCoordinator> coordinator = [self.presentedViewController transitionCoordinator];
     if (coordinator) {

@@ -280,7 +280,8 @@
 
 // 示例10:alert 发散动画
 - (void)alertTest2 {
-    SPAlertController *alertController = [SPAlertController alertControllerWithTitle:@"我是主标题" message:@"我是副标题" preferredStyle:SPAlertControllerStyleAlert animationType:SPAlertAnimationTypeExpand];
+  
+    SPAlertController *alertController = [SPAlertController alertControllerWithTitle:nil message:@"我是副标题" preferredStyle:SPAlertControllerStyleAlert animationType:SPAlertAnimationTypeExpand];
     _alertController = alertController;
     SPAlertAction *action1 = [SPAlertAction actionWithTitle:@"第1个" style:SPAlertActionStyleDefault handler:^(SPAlertAction * _Nonnull action) {
         NSLog(@"点击了第1个");
