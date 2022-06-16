@@ -286,7 +286,7 @@
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        self.contentEdgeInsets = UIEdgeInsetsMake(30, 15, 30, 15);
+        self.contentEdgeInsets = UIEdgeInsetsMake(40, 15, 30, 15);
         self.LabelSpaceMargin = 20;
     }
     return self;
@@ -1177,9 +1177,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     }
     _animationType = animationType;
     if (preferredStyle == SPAlertControllerStyleAlert) {
-        _maxMarginForAlert = (MIN(SP_SCREEN_WIDTH, SP_SCREEN_HEIGHT) - 275) / 2.0;
-        _minDistanceToEdges = (MIN(SP_SCREEN_WIDTH, SP_SCREEN_HEIGHT) - 275) / 2.0;
-        _cornerRadius = 6.0;
+        _maxMarginForAlert = (MIN(SP_SCREEN_WIDTH, SP_SCREEN_HEIGHT)*0.2) / 2.0;
+        _minDistanceToEdges = (MIN(SP_SCREEN_WIDTH, SP_SCREEN_HEIGHT)*0.2) / 2.0;
+        _cornerRadius = 10.0;
     } else {
         _minDistanceToEdges = 70;
         _maxTopMarginForActionSheet = 70;
