@@ -17,7 +17,7 @@
 #define SP_STATUS_BAR_HEIGHT (Is_iPhoneX ? 44 : 20)
 #define SP_ACTION_TITLE_FONTSIZE 18
 #define SP_ACTION_HEIGHT 55.0
-
+#define SP_MAX_MESSAGE_HEIGHT 350.0*(SP_SCREEN_WIDTH/320.0)
 @interface SPColorStyle : NSObject
 
 + (UIColor *)normalColor;
@@ -1215,7 +1215,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     _titleColor = [SPColorStyle lightBlack_DarkWhiteColor];
     _messageFont = [UIFont systemFontOfSize:16];
     _messageColor = [SPColorStyle grayColor];
-    _textAlignment = NSTextAlignmentCenter;
+    _titleTextAlignment = NSTextAlignmentCenter;
+    _messageAlignment = NSTextAlignmentCenter;
     _imageLimitSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
     _cornerRadiusForAlert = 6.0;
     _backgroundViewAppearanceStyle = -1;
@@ -1571,7 +1572,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.headerView.titleLabel.text = _title;
         self.headerView.titleLabel.font = _titleFont;
         self.headerView.titleLabel.textColor = _titleColor;
-        self.headerView.titleLabel.textAlignment = _textAlignment;
+        self.headerView.titleLabel.textAlignment = _titleTextAlignment;
         [self setupPreferredMaxLayoutWidthForLabel:self.headerView.titleLabel];
     }
     if (self.attributedMessage.length) {
@@ -1581,7 +1582,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.headerView.messageLabel.text = _message;
         self.headerView.messageLabel.font = _messageFont;
         self.headerView.messageLabel.textColor = _messageColor;
-        self.headerView.messageLabel.textAlignment = _textAlignment;
+        self.headerView.messageLabel.textAlignment = _messageAlignment;
         [self setupPreferredMaxLayoutWidthForLabel:self.headerView.messageLabel];
     }
 }
@@ -1786,12 +1787,15 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     }
 }
 
-- (void)setTextAlignment:(NSTextAlignment)textAlignment {
-    _textAlignment = textAlignment;
-    self.headerView.titleLabel.textAlignment = _textAlignment;
-    self.headerView.messageLabel.textAlignment = _textAlignment;
+- (void)setTitleTextAlignment:(NSTextAlignment)titleTextAlignment{
+    _titleTextAlignment = titleTextAlignment;
+    self.headerView.titleLabel.textAlignment = titleTextAlignment;
 }
 
+- (void)setMessageAlignment:(NSTextAlignment)messageAlignment{
+    _messageAlignment = messageAlignment;
+    self.headerView.messageLabel.textAlignment = messageAlignment;
+}
 - (void)setIcon:(UIImage *)image {
     _image = image;
     if (self.isViewLoaded) {

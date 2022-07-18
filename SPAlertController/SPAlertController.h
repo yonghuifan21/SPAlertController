@@ -104,8 +104,10 @@ typedef NS_ENUM(NSInteger, SPAlertActionStyle) {
 @property(nonatomic, strong) UIColor *messageColor;
 /** 副标题字体,默认16,未加粗 */
 @property(nonatomic, strong) UIFont *messageFont;
-/** 对齐方式(包括主标题和副标题) */
-@property(nonatomic, assign) NSTextAlignment textAlignment;
+/** 对齐方式 - 包括主标题 */
+@property(nonatomic, assign) NSTextAlignment titleTextAlignment;
+/** 对齐方式 - 副标题 */
+@property(nonatomic, assign) NSTextAlignment messageAlignment;
 /** 头部图标的限制大小,默认无穷大 */
 @property (nonatomic, assign) CGSize imageLimitSize;
 /** 图片的tintColor,当外部的图片使用了UIImageRenderingModeAlwaysTemplate时,该属性可起到作用 */
